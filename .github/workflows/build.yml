@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - run: python3 -m unittest discover -s scripts -p 'test_*.py'
       - uses: actions/setup-go@v5
         with:
@@ -63,11 +63,11 @@ jobs:
           - edition: zhenguojian
             arguments: '--all-sources'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - uses: actions/setup-java@v4
+      - uses: actions/setup-java@v5
         with:
           distribution: temurin
           java-version: '17'
@@ -81,7 +81,7 @@ jobs:
           channel: stable
           cache: true
       - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
+        uses: android-actions/setup-android@v4
         with:
           packages: "platforms;android-36"
           accept-android-sdk-licenses: true
@@ -131,7 +131,7 @@ jobs:
       - name: Remove signing files
         if: always()
         run: python scripts/configure_signing.py --clean
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.edition }}-android
           path: dist/android/*
@@ -150,7 +150,7 @@ jobs:
           - edition: zhenguojian
             arguments: '--all-sources'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-go@v5
         with:
           go-version-file: native/go.mod
@@ -179,7 +179,7 @@ jobs:
       # 运行器没有音频和图形设备，播放器自检的超时结果不阻塞出包，结论仍显示在运行详情里。
       - run: python scripts/smoke_windows.py ${{ matrix.arguments }}
         continue-on-error: true
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         if: always()
         with:
           name: ${{ matrix.edition }}-windows
@@ -200,7 +200,7 @@ jobs:
           - edition: zhenguojian
             arguments: '--all-sources'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -214,7 +214,7 @@ jobs:
           channel: stable
           cache: true
       - run: python3 scripts/build_ios.py ${{ matrix.arguments }}
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v5
         with:
           name: ${{ matrix.edition }}-ios-unsigned
           path: dist/ios/*
@@ -229,7 +229,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - uses: actions/download-artifact@v4
         with:
           path: artifacts
